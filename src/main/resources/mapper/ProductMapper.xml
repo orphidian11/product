@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.orphidian11.projects.cars.product.mapper.ProductMapper" >
+    <!--<cache />-->
+    <resultMap id="productMap" type="net.orphidian11.projects.cars.product.domain.Product" >
+        <id column="product_id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="created_by_id" property="createdById" jdbcType="INTEGER" />
+        <result column="created_by_date" property="createdByDate" jdbcType="DATE" />
+        <result column="last_update_by_id" property="lastUpdateById" jdbcType="INTEGER" />
+        <result column="last_update_by_date" property="lastUpdateByDate" jdbcType="DATE" />
+    </resultMap>
+
+    <select id="findAll" resultMap="productMap">
+        SELECT product_id, name, description, created_by_id, created_by_date, last_update_by_id, last_update_by_date FROM product
+    </select>
+
+    <select id="findById" resultMap="productMap">
+        SELECT product_id, name, description, created_by_id, created_by_date, last_update_by_id, last_update_by_date FROM product WHERE product_id = #{id}
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyColumn="product_id" keyProperty="id">
+        INSERT INTO product
+            (name,
+            description,
+            created_by_id,
+            created_by_date,
+            last_update_by_id,
+            last_update_by_date)
+        VALUES
+            ({#name},
+            {#description},
+            {#createdById},
+            {#createdByDate},
+            {#createdById},
+            {#createdByDate})
+    </insert>
+
+    <update id="edit" parameterType="net.orphidian11.projects.cars.product.domain.Product">
+        UPDATE product
+        SET
+            name = {#product.name},
+            description = {#product.description},
+            last_update_by_id = {#product.lastUpdateById},
+            last_update_by_date = {#product.lastUpdateByDate}
+        WHERE product_id = {#product.id}
+    </update>
+
+    <delete id="delete" parameterType="net.orphidian11.projects.cars.product.domain.Product">
+        DELETE FROM product WHERE product_id = {#product.id}
+    </delete>
+</mapper>
