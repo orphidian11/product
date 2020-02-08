@@ -19,6 +19,14 @@ public class Product {
         this.id = id;
     }
 
+    public Product(Integer id, String name, String description, Integer createdById, Date createdByDate) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createdById = createdById;
+        this.createdByDate = createdByDate;
+    }
+
     public Product(String name, String description, Integer createdById, Date createdByDate) {
         this.name = name;
         this.description = description;
